@@ -3,18 +3,31 @@ import ReactDOM from 'react-dom';
 import './styles/globals.scss';
 
 import { createStore } from 'redux'
-import counter from './reducers/index.js'
+import todostate from './reducers/index.js'
 
 import styles from './styles/todoapp.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeartbeat, faCheckCircle, faLightbulb } from '@fortawesome/free-solid-svg-icons'
-import Card from './modules/card/card.jsx';
 
-const store = createStore(counter)
+// components
+import Card from './modules/card/card.jsx';
+import AddTaskBtn from './modules/addtask/addtask.jsx';
+
+const store = createStore(todostate)
 
 class TodoApp extends Component {
     
   render() {
+
+    const addTask = () => {
+        console.log("add task click");
+        store.dispatch({ type: 'ADD_TASK' });
+    }
+
+    const delTask = (taskId) => {
+        console.log("del task click id: "+taskId);
+        store.dispatch({ type: 'DEL_TASK', payload: taskId });
+    }
 
     return(
       <div className={styles.wrapper}>
@@ -31,7 +44,12 @@ class TodoApp extends Component {
                       </div>
                   </div>
                   <div className={styles.todo_content}>
-                      <Card value={store.getState()} onIncrement={() => store.dispatch({ type: 'INCREMENT' })} onDecrement={() => store.dispatch({ type: 'DECREMENT' })} />
+                      {
+                        store.getState().map(function(task, index){
+                            return <Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} taskId={task.id} onDelTask={() => {delTask(task.id)}} />
+                        })
+                      }
+                      <AddTaskBtn onAddTask={addTask}/>
                   </div>
               </div>
               <div className={styles.content__done}>
@@ -46,6 +64,7 @@ class TodoApp extends Component {
                       </div>
                   </div>
                   <div className={styles.done_content}>
+
                   </div>
               </div>
               <div className={styles.content__later}>
@@ -60,6 +79,7 @@ class TodoApp extends Component {
                       </div>
                   </div>
                   <div className={styles.later_content}>
+
                   </div>
               </div>
           </div>

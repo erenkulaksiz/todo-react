@@ -8,14 +8,14 @@ class Card extends Component {
     }
 
     render() {
-        const { value, onIncrement, onDecrement } = this.props
+        const { taskName, taskDesc, taskId, onDelTask } = this.props
         return(
             <div className={styles.card}>
                 <div className={styles.title}>
-                    {value} <button onClick={onIncrement}>+</button>{' '}<button onClick={onDecrement}>-</button>
+                    { taskName } <button onClick={onDelTask}>del task</button>
                 </div>
                 <div className={styles.desc}>
-                    {this.props.desc}
+                    { taskDesc }
                 </div>
             </div>
         )
@@ -23,9 +23,10 @@ class Card extends Component {
 }
 
 Card.propTypes = {
-    value: PropTypes.number.isRequired,
-    onIncrement: PropTypes.func.isRequired,
-    onDecrement: PropTypes.func.isRequired
+    taskName: PropTypes.string.isRequired,
+    taskDesc: PropTypes.string.isRequired,
+    taskId: PropTypes.number.isRequired,
+    onDelTask: PropTypes.func.isRequired
 }
 
 export default Card
