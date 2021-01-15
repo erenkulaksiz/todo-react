@@ -21,19 +21,23 @@ const defaultState = [
   }
 ]
 
-const addTaskDefault = {
-  id: 4,
-  taskName: "Default",
-  taskDesc: "Default",
-  taskTarget: "todo",
+const addTaskDefault = (target) => {
+  const gerkcanbuven = {
+    id: 4,
+    taskName: "Title",
+    taskDesc: "Description",
+    taskTarget: target
+  }
+  return gerkcanbuven
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case 'ADD_TASK':
-      return [...state, addTaskDefault];
+      return [...state, addTaskDefault(action.payload)];
     case 'DEL_TASK':
-      /* DEL BY USING ID
+      
+      /* id ile sil
       let newState = [...state];
       newState.map(function(key, index) {
         console.log(key);
@@ -43,12 +47,17 @@ export default (state = defaultState, action) => {
       })
       */
 
-      // Del by using index
+      // indexe göre sil
 
       let newState = [...state];
       newState.splice(action.payload, 1);
+
       console.log(newState);
-      return newState;
+      return newState
+    case 'EDIT_MODE':
+      // buraya edite giren payload gelecek
+      // indexte edit modu okuyacağim eğer edit modda index varsa ve o anki maplenen indexle uyuşuyosa edit moda alıcak
+      return state
     default:
       return state
   }
