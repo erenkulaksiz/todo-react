@@ -1,1 +1,1 @@
-hey, i started a new repo. actually its copy of todo-app but without using next.js so i can understand how redux works. 
+mokoko abu wa dei su
