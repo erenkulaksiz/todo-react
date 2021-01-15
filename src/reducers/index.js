@@ -2,6 +2,10 @@
 
 const defaultState = [
   {
+    editing: false,
+    id: 0,
+  },
+  {
     id: 1,
     taskName: "Buy Gro",
     taskDesc: "haha",
@@ -55,8 +59,22 @@ export default (state = defaultState, action) => {
       console.log(newState);
       return newState
     case 'EDIT_MODE':
-      // buraya edite giren payload gelecek
-      // indexte edit modu okuyacağim eğer edit modda index varsa ve o anki maplenen indexle uyuşuyosa edit moda alıcak
+      state[0].editing = !state[0].editing;
+      state[0].id = action.payload;
+      return state
+    case 'EDIT_SUBMIT':
+      console.log(action.payload.id);
+      if(action.payload.data.title){
+        // INDEXLE CALISIYORUMM!!!
+        state[action.payload.id].taskName = action.payload.data.title;
+        console.log("changed title to: "+action.payload.data.title);
+        /// IDYE GECINCE DEGISTIR UYARIIII!!!
+      }
+      if(action.payload.data.desc){
+        // !!!!!
+        state[action.payload.id].taskDesc = action.payload.data.desc;
+        console.log("changed desc to: "+action.payload.data.desc);
+      }
       return state
     default:
       return state

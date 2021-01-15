@@ -20,6 +20,10 @@ class TodoApp extends Component {
     
   render() {
 
+    const editMode = (taskId) => {
+        store.dispatch({ type: 'EDIT_MODE', payload: taskId });
+    }
+
     const addTask = (taskTarget) => {
         console.log("add task click target: "+taskTarget);
         store.dispatch({ type: 'ADD_TASK', payload: taskTarget });
@@ -30,18 +34,31 @@ class TodoApp extends Component {
         store.dispatch({ type: 'DEL_TASK', payload: taskId });
     }
 
+    const cancelEdit = () => {
+        store.dispatch({ type: 'EDIT_MODE', payload: -1 });
+    }
+
+    const submitEdit = (data, id) => {
+        store.dispatch({ type: 'EDIT_SUBMIT', payload: {data, id} });
+        store.dispatch({ type: 'EDIT_MODE', payload: -1 });
+    }
+
     const todoTasks = [], laterTasks = [], doneTasks = [];
 
     store.getState().map(function(task, index){
         switch(task.taskTarget){
             case 'todo':
-                todoTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+                if(store.getState()[0].editing && index == store.getState()[0].id){
+                    todoTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} isEditing={true} onCancel={() => {cancelEdit()}} onSubmit={(data) => {submitEdit(data, index)}}/>);
+                }else{
+                    todoTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} onEditClick={() => {editMode(index)}} isEditing={false} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+                }
             break;
             case 'later':
-                laterTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+                laterTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} onEditClick={() => {editMode(index)}} isEditing={false} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
             break;
             case 'done':
-                doneTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+                doneTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} onEditClick={() => {editMode(index)}} isEditing={false} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
             break;
         }
     })
