@@ -29,6 +29,23 @@ class TodoApp extends Component {
         store.dispatch({ type: 'DEL_TASK', payload: taskId });
     }
 
+    const todoTasks = [], laterTasks = [], doneTasks = [];
+    
+    
+    store.getState().map(function(task, index){
+        switch(task.taskTarget){
+            case 'todo':
+                todoTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+            break;
+            case 'later':
+                laterTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+            break;
+            case 'done':
+                doneTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+            break;
+        }
+    })
+
     return(
       <div className={styles.wrapper}>
           <div className={styles.content}>
@@ -44,11 +61,7 @@ class TodoApp extends Component {
                       </div>
                   </div>
                   <div className={styles.todo_content}>
-                      {
-                        store.getState().map(function(task, index){
-                            return <Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} taskId={task.id} onDelTask={() => {delTask(task.id)}} />
-                        })
-                      }
+                      {todoTasks}
                       <AddTaskBtn onAddTask={addTask}/>
                   </div>
               </div>
@@ -64,7 +77,8 @@ class TodoApp extends Component {
                       </div>
                   </div>
                   <div className={styles.done_content}>
-
+                      {doneTasks}
+                      <AddTaskBtn onAddTask={addTask}/>
                   </div>
               </div>
               <div className={styles.content__later}>
@@ -79,7 +93,8 @@ class TodoApp extends Component {
                       </div>
                   </div>
                   <div className={styles.later_content}>
-
+                      {laterTasks}
+                      <AddTaskBtn onAddTask={addTask}/>
                   </div>
               </div>
           </div>

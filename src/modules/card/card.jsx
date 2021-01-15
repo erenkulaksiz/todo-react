@@ -8,7 +8,7 @@ class Card extends Component {
     }
 
     render() {
-        const { taskName, taskDesc, taskId, onDelTask } = this.props
+        const { taskName, taskDesc, onDelTask } = this.props
         return(
             <div className={styles.card}>
                 <div className={styles.title}>
@@ -25,7 +25,6 @@ class Card extends Component {
 Card.propTypes = {
     taskName: PropTypes.string.isRequired,
     taskDesc: PropTypes.string.isRequired,
-    taskId: PropTypes.number.isRequired,
     onDelTask: PropTypes.func.isRequired
 }
 
