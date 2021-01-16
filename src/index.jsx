@@ -43,22 +43,76 @@ class TodoApp extends Component {
         store.dispatch({ type: 'EDIT_MODE', payload: -1 });
     }
 
+    const changeTarget = (target, id) => {
+        store.dispatch({ type: 'CHANGE_TARGET', payload: {target, id} });
+    }
+
     const todoTasks = [], laterTasks = [], doneTasks = [];
 
     store.getState().map(function(task, index){
         switch(task.taskTarget){
-            case 'todo':
+            case 0:
                 if(store.getState()[0].editing && index == store.getState()[0].id){
-                    todoTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} isEditing={true} onCancel={() => {cancelEdit()}} onSubmit={(data) => {submitEdit(data, index)}}/>);
+                    // Editing
+                    todoTasks.push(<Card 
+                        key={index} 
+                        taskName={task.taskName} 
+                        taskDesc={task.taskDesc} 
+                        isEditing={true}
+                        onCancel={() => {cancelEdit()}} 
+                        onSubmit={(data) => {submitEdit(data, index)}}/>);
                 }else{
-                    todoTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} onEditClick={() => {editMode(index)}} isEditing={false} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+                    todoTasks.push(<Card 
+                        key={index} 
+                        taskName={task.taskName} 
+                        taskDesc={task.taskDesc} 
+                        onEditClick={() => {editMode(index)}} 
+                        isEditing={false} 
+                        onMove={(side) => {changeTarget(side, index)}} 
+                        onDelTask={() => {delTask(index)}} />); /* index instead of id */ 
                 }
             break;
-            case 'later':
-                laterTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} onEditClick={() => {editMode(index)}} isEditing={false} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+            case 1:
+                if(store.getState()[0].editing && index == store.getState()[0].id){
+                    // Editing
+                    doneTasks.push(<Card 
+                        key={index} 
+                        taskName={task.taskName} 
+                        taskDesc={task.taskDesc} 
+                        isEditing={true}
+                        onCancel={() => {cancelEdit()}} 
+                        onSubmit={(data) => {submitEdit(data, index)}}/>);
+                }else{
+                    doneTasks.push(<Card 
+                        key={index} 
+                        taskName={task.taskName} 
+                        taskDesc={task.taskDesc} 
+                        onEditClick={() => {editMode(index)}} 
+                        isEditing={false} 
+                        onMove={(side) => {changeTarget(side, index)}} 
+                        onDelTask={() => {delTask(index)}} />); /* index instead of id */ 
+                }
             break;
-            case 'done':
-                doneTasks.push(<Card key={index} taskName={task.taskName} taskDesc={task.taskDesc} onEditClick={() => {editMode(index)}} isEditing={false} /* index instead of id */ onDelTask={() => {delTask(index)}} />);
+            case 2:
+                if(store.getState()[0].editing && index == store.getState()[0].id){
+                    // Editing
+                    laterTasks.push(<Card 
+                        key={index} 
+                        taskName={task.taskName} 
+                        taskDesc={task.taskDesc} 
+                        isEditing={true}
+                        onCancel={() => {cancelEdit()}} 
+                        onSubmit={(data) => {submitEdit(data, index)}}/>);
+                }else{
+                    laterTasks.push(<Card 
+                        key={index} 
+                        taskName={task.taskName} 
+                        taskDesc={task.taskDesc} 
+                        onEditClick={() => {editMode(index)}} 
+                        isEditing={false} 
+                        onMove={(side) => {changeTarget(side, index)}} 
+                        onDelTask={() => {delTask(index)}} />); /* index instead of id */ 
+                }
             break;
         }
     })
@@ -81,7 +135,7 @@ class TodoApp extends Component {
                   </div>
                   <div className={styles.todo_content}>
                       {todoTasks}
-                      <AddTaskBtn onAddTask={() => {addTask('todo')}}/>
+                      <AddTaskBtn onAddTask={() => {addTask(0)}}/>
                       {todoTasks == 0 && <AddBanner />}
                   </div>
               </div>
@@ -98,7 +152,7 @@ class TodoApp extends Component {
                   </div>
                   <div className={styles.done_content}>
                       {doneTasks}
-                      <AddTaskBtn onAddTask={() => {addTask('done')}}/>
+                      <AddTaskBtn onAddTask={() => {addTask(1)}}/>
                       {doneTasks == 0 && <AddBanner />}
                   </div>
               </div>
@@ -115,7 +169,7 @@ class TodoApp extends Component {
                   </div>
                   <div className={styles.later_content}>
                       {laterTasks}
-                      <AddTaskBtn onAddTask={() => {addTask('later')}}/>
+                      <AddTaskBtn onAddTask={() => {addTask(2)}}/>
                       {laterCount == 0 && <AddBanner />}
                   </div>
               </div>

@@ -7,21 +7,21 @@ const defaultState = [
   },
   {
     id: 1,
-    taskName: "Buy Gro",
-    taskDesc: "haha",
-    taskTarget: "todo",
+    taskName: "Buy Groceries",
+    taskDesc: "",
+    taskTarget: 0,
   },
   {
     id: 2,
     taskName: "deez nuts",
     taskDesc: "ahadsa",
-    taskTarget: "todo",
+    taskTarget: 0,
   },
   {
     id: 3,
     taskName: "not done",
     taskDesc: "ahadsa",
-    taskTarget: "later",
+    taskTarget: 2,
   }
 ]
 
@@ -65,15 +65,24 @@ export default (state = defaultState, action) => {
     case 'EDIT_SUBMIT':
       console.log(action.payload.id);
       if(action.payload.data.title){
-        // INDEXLE CALISIYORUMM!!!
         state[action.payload.id].taskName = action.payload.data.title;
         console.log("changed title to: "+action.payload.data.title);
-        /// IDYE GECINCE DEGISTIR UYARIIII!!!
       }
       if(action.payload.data.desc){
-        // !!!!!
         state[action.payload.id].taskDesc = action.payload.data.desc;
         console.log("changed desc to: "+action.payload.data.desc);
+      }
+      return state
+    case 'CHANGE_TARGET':
+      if(action.payload.target == 'left'){
+        console.log(state[action.payload.id].taskTarget);
+        if(state[action.payload.id].taskTarget > 0){
+          state[action.payload.id].taskTarget--;
+        }
+      }else if(action.payload.target == 'right'){
+        if(state[action.payload.id].taskTarget < 2){
+          state[action.payload.id].taskTarget++;
+        }
       }
       return state
     default:

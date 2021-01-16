@@ -16,7 +16,16 @@ class Card extends Component {
         this.setState({ [event.target.name]: event.target.value });
     }
     render() {
-        const { taskName, taskDesc, isEditing, onEditClick, onDelTask, onSubmit, onCancel} = this.props
+        const { 
+             taskName,
+             taskDesc, 
+             isEditing, 
+             onEditClick, 
+             onDelTask, 
+             onSubmit, 
+             onCancel, 
+             onMove
+        } = this.props
 
         const data = {
             desc: this.state.desc,
@@ -45,17 +54,18 @@ class Card extends Component {
             return(
                 <div className={styles.card}>
                     <div className={styles.card__controls_hover}>
-                        <a href='#' className={styles.navIcon}><FontAwesomeIcon icon={faArrowLeft}/></a>
-                        <a href='#' className={styles.navIcon}><FontAwesomeIcon icon={faArrowRight}/></a>
+                        <a href='#' onClick={() => {onMove('left')}} className={styles.navIcon}><FontAwesomeIcon icon={faArrowLeft}/></a>
+                        <a href='#' onClick={() => {onMove('right')}} className={styles.navIcon}><FontAwesomeIcon icon={faArrowRight}/></a>
                         <a href='#' onClick={onEditClick} className={styles.navIcon}><FontAwesomeIcon icon={faEdit} /></a>
                         <a href='#' onClick={onDelTask}><FontAwesomeIcon icon={faTrash}/></a>
                     </div>
                     <div className={styles.title}>
                         {taskName}
                     </div>
-                    <div className={styles.desc}>
-                        {taskDesc}
-                    </div>
+
+                    {taskDesc &&< div className={styles.desc}>{taskDesc}</div> }
+
+                    
                 </div>
             )
         }
@@ -70,6 +80,7 @@ Card.propTypes = {
     onDelTask: PropTypes.func,
     onCancel: PropTypes.func,
     onSubmit: PropTypes.func,
+    onMove: PropTypes.func
 }
 
 export default Card
