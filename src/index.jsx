@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './styles/globals.scss';
 
 import { createStore } from 'redux';
-import todostate from './reducers/index.js';
+import reducer from './reducers/index.js';
 
 import styles from './styles/todoapp.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,13 +14,14 @@ import Card from './modules/card/card.jsx';
 import AddTaskBtn from './modules/addtask/addtask.jsx';
 import AddBanner from './modules/addbanner/addbanner.jsx';
 
-const store = createStore(todostate)
+const store = createStore(reducer)
 
 class TodoApp extends Component {
     
   render() {
 
     const editMode = (taskId) => {
+        console.log("edit mode: "+taskId);
         store.dispatch({ type: 'EDIT_MODE', payload: taskId });
     }
 
@@ -49,10 +50,12 @@ class TodoApp extends Component {
 
     const todoTasks = [], laterTasks = [], doneTasks = [];
 
-    store.getState().map(function(task, index){
+    console.log(store.getState());
+
+    store.getState().tasks.map(function(task, index){
         switch(task.taskTarget){
             case 0:
-                if(store.getState()[0].editing && index == store.getState()[0].id){
+                if(store.getState().edit.editing && index == store.getState().edit.id){
                     // Editing
                     todoTasks.push(<Card 
                         key={index} 
@@ -69,11 +72,11 @@ class TodoApp extends Component {
                         onEditClick={() => {editMode(index)}} 
                         isEditing={false} 
                         onMove={(side) => {changeTarget(side, index)}} 
-                        onDelTask={() => {delTask(index)}} />); /* index instead of id */ 
+                        onDelTask={() => {delTask(index)}} />);
                 }
             break;
             case 1:
-                if(store.getState()[0].editing && index == store.getState()[0].id){
+                if(store.getState().edit.editing && index == store.getState().edit.id){
                     // Editing
                     doneTasks.push(<Card 
                         key={index} 
@@ -90,11 +93,11 @@ class TodoApp extends Component {
                         onEditClick={() => {editMode(index)}} 
                         isEditing={false} 
                         onMove={(side) => {changeTarget(side, index)}} 
-                        onDelTask={() => {delTask(index)}} />); /* index instead of id */ 
+                        onDelTask={() => {delTask(index)}} />); 
                 }
             break;
             case 2:
-                if(store.getState()[0].editing && index == store.getState()[0].id){
+                if(store.getState().edit.editing && index == store.getState().edit.id){
                     // Editing
                     laterTasks.push(<Card 
                         key={index} 
@@ -111,7 +114,7 @@ class TodoApp extends Component {
                         onEditClick={() => {editMode(index)}} 
                         isEditing={false} 
                         onMove={(side) => {changeTarget(side, index)}} 
-                        onDelTask={() => {delTask(index)}} />); /* index instead of id */ 
+                        onDelTask={() => {delTask(index)}} />);  
                 }
             break;
         }
@@ -147,7 +150,7 @@ class TodoApp extends Component {
                           </div>
                           <div className={styles.count}>
                             {doneCount != 0 && doneCount}
-                          </div>
+                          </div> 
                       </div>
                   </div>
                   <div className={styles.done_content}>

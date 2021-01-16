@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 class AddTask extends Component {
-
-
     render (){
         const { onAddTask } = this.props
         return (

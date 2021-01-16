@@ -1,33 +1,25 @@
 
-
-const defaultState = [
-  {
+const defaultState = {
+  tasks: [
+    {
+      taskName: "buy groceries",
+      taskDesc: "",
+      taskTarget: 0
+    },
+    {
+      taskName: "deez nuts",
+      taskDesc: "",
+      taskTarget: 2,
+    }
+  ],
+  edit: {
     editing: false,
     id: 0,
-  },
-  {
-    id: 1,
-    taskName: "Buy Groceries",
-    taskDesc: "",
-    taskTarget: 0,
-  },
-  {
-    id: 2,
-    taskName: "deez nuts",
-    taskDesc: "ahadsa",
-    taskTarget: 0,
-  },
-  {
-    id: 3,
-    taskName: "not done",
-    taskDesc: "ahadsa",
-    taskTarget: 2,
   }
-]
+}
 
 const addTaskDefault = (target) => {
   const gerkcanbuven = {
-    id: 4,
     taskName: "Title",
     taskDesc: "Description",
     taskTarget: target
@@ -38,7 +30,9 @@ const addTaskDefault = (target) => {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case 'ADD_TASK':
-      return [...state, addTaskDefault(action.payload)];
+      let bmw320ci = {...state};
+      bmw320ci.tasks.push(addTaskDefault(action.payload));
+      return bmw320ci /*[...state.tasks, addTaskDefault(action.payload)];*/
     case 'DEL_TASK':
       
       /* id ile sil
@@ -50,39 +44,37 @@ export default (state = defaultState, action) => {
         }
       })
       */
-
       // indexe göre sil
-
-      let newState = [...state];
-      newState.splice(action.payload, 1);
-
-      console.log(newState);
-      return newState
+      let newTasks = {...state};
+      newTasks.tasks.splice(action.payload, 1);
+      console.log(newTasks);
+      return newTasks
+    case 'CHANGE_TARGET':
+      if(action.payload.target == 'left'){
+        console.log(state.tasks[action.payload.id].taskTarget);
+        if(state.tasks[action.payload.id].taskTarget > 0){
+          state.tasks[action.payload.id].taskTarget--;
+        }
+      }else if(action.payload.target == 'right'){
+        if(state.tasks[action.payload.id].taskTarget < 2){
+          state.tasks[action.payload.id].taskTarget++;
+        }
+      }
+      return state
     case 'EDIT_MODE':
-      state[0].editing = !state[0].editing;
-      state[0].id = action.payload;
+      console.log("inside edit mode");
+      state.edit.editing = !state.edit.editing;
+      state.edit.id = action.payload;
       return state
     case 'EDIT_SUBMIT':
       console.log(action.payload.id);
       if(action.payload.data.title){
-        state[action.payload.id].taskName = action.payload.data.title;
+        state.tasks[action.payload.id].taskName = action.payload.data.title;
         console.log("changed title to: "+action.payload.data.title);
       }
       if(action.payload.data.desc){
-        state[action.payload.id].taskDesc = action.payload.data.desc;
+        state.tasks[action.payload.id].taskDesc = action.payload.data.desc;
         console.log("changed desc to: "+action.payload.data.desc);
-      }
-      return state
-    case 'CHANGE_TARGET':
-      if(action.payload.target == 'left'){
-        console.log(state[action.payload.id].taskTarget);
-        if(state[action.payload.id].taskTarget > 0){
-          state[action.payload.id].taskTarget--;
-        }
-      }else if(action.payload.target == 'right'){
-        if(state[action.payload.id].taskTarget < 2){
-          state[action.payload.id].taskTarget++;
-        }
       }
       return state
     default:

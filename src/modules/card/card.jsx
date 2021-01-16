@@ -10,6 +10,7 @@ class Card extends Component {
         this.state = { 
             title: null, 
             desc: null,
+            isHovered: null
         };
     }
     handleChange = (event) => {
@@ -18,13 +19,13 @@ class Card extends Component {
     render() {
         const { 
              taskName,
-             taskDesc, 
+             taskDesc,
              isEditing, 
              onEditClick, 
              onDelTask, 
              onSubmit, 
              onCancel, 
-             onMove
+             onMove,
         } = this.props
 
         const data = {
@@ -52,8 +53,8 @@ class Card extends Component {
             )
         }else{
             return(
-                <div className={styles.card}>
-                    <div className={styles.card__controls_hover}>
+                <div className={styles.card} onMouseEnter={() => {this.setState({isHovered: true})}} onMouseLeave={() => {this.setState({isHovered: false})}}>
+                    <div className={this.state.isHovered ? styles.card__controls_hover : styles.card__controls}>
                         <a href='#' onClick={() => {onMove('left')}} className={styles.navIcon}><FontAwesomeIcon icon={faArrowLeft}/></a>
                         <a href='#' onClick={() => {onMove('right')}} className={styles.navIcon}><FontAwesomeIcon icon={faArrowRight}/></a>
                         <a href='#' onClick={onEditClick} className={styles.navIcon}><FontAwesomeIcon icon={faEdit} /></a>
@@ -80,7 +81,7 @@ Card.propTypes = {
     onDelTask: PropTypes.func,
     onCancel: PropTypes.func,
     onSubmit: PropTypes.func,
-    onMove: PropTypes.func
+    onMove: PropTypes.func,
 }
 
 export default Card
