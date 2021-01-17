@@ -2,13 +2,33 @@
 const defaultState = {
   tasks: [
     {
-      taskName: "buy groceries",
+      taskName: "Buy Groceries",
       taskDesc: "",
       taskTarget: 0
     },
     {
-      taskName: "deez nuts",
+      taskName: "Buy that Battlefield 1",
       taskDesc: "",
+      taskTarget: 0,
+    },
+    {
+      taskName: "Check for dollar/try price",
+      taskDesc: "",
+      taskTarget: 0,
+    },
+    {
+      taskName: "Zoom meeting @ 16:00",
+      taskDesc: "With our teachers!!",
+      taskTarget: 0,
+    },
+    {
+      taskName: "Watch: Interstellar",
+      taskDesc: "Watch: Martian",
+      taskTarget: 2,
+    },
+    {
+      taskName: "Finish the project",
+      taskDesc: "Already finished. I see.",
       taskTarget: 2,
     }
   ],
@@ -19,20 +39,20 @@ const defaultState = {
 }
 
 const addTaskDefault = (target) => {
-  const gerkcanbuven = {
-    taskName: "Title",
+  const newTask = {
+    taskName: "New Task",
     taskDesc: "Description",
     taskTarget: target
   }
-  return gerkcanbuven
+  return newTask
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case 'ADD_TASK':
-      let bmw320ci = {...state};
-      bmw320ci.tasks.push(addTaskDefault(action.payload));
-      return bmw320ci /*[...state.tasks, addTaskDefault(action.payload)];*/
+      let newState = {...state};
+      newState.tasks.push(addTaskDefault(action.payload));
+      return newState /*[...state.tasks, addTaskDefault(action.payload)];*/
     case 'DEL_TASK':
       
       /* id ile sil

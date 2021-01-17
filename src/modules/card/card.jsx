@@ -37,12 +37,10 @@ class Card extends Component {
             return(
                 // Editing mode
                 <div className={styles.card__edit}>
-                    {/* Controls */}
                     <div className={styles.card__controls_hover}>
                         <a href='#' onClick={() => {onSubmit(data)}} className={styles.navIconSubmit}><FontAwesomeIcon icon={faCheck}/></a>
                         <a href='#' onClick={onCancel}><FontAwesomeIcon icon={faTimes}/></a>
                     </div>
-                    {/* End of Controls */}
                     <div className={styles.card__title}>
                         <input type='text' name={'title'} placeholder={'Title'} defaultValue={taskName} onChange={this.handleChange}></input>
                     </div>
