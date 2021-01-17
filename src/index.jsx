@@ -89,7 +89,7 @@ class TodoApp extends Component {
                             <div className={styles.header_content}>
                                 <div className={styles.title}>
                                     <FontAwesomeIcon icon={faHeartbeat} className={styles.headerIcon} /> To-Do
-                          </div>
+                                </div>
                                 <div className={styles.count}>
                                     {todoCount != 0 && todoCount}
                                 </div>
@@ -106,7 +106,7 @@ class TodoApp extends Component {
                             <div className={styles.header_content}>
                                 <div className={styles.title}>
                                     <FontAwesomeIcon icon={faCheckCircle} className={styles.headerIcon} /> Done
-                          </div>
+                                </div>
                                 <div className={styles.count}>
                                     {doneCount != 0 && doneCount}
                                 </div>
@@ -123,7 +123,7 @@ class TodoApp extends Component {
                             <div className={styles.header_content}>
                                 <div className={styles.title}>
                                     <FontAwesomeIcon icon={faLightbulb} className={styles.headerIcon} /> To-Do Someday
-                          </div>
+                                </div>
                                 <div className={styles.count}>
                                     {laterCount != 0 && laterCount}
                                 </div>
