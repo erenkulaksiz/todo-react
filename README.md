@@ -3,7 +3,7 @@ Same as todo-app i made earlier, but i stopped using next.js and implemented red
 I didnt made project with API this time, because of the mockapi.io's limitations.
 
 # Run the project
-git clone https://github.com/erenkulaksiz/todo-react.git
-cd todo-react
-npm install
-npm start
+git clone https://github.com/erenkulaksiz/todo-react.git<br/>
+cd todo-react<br/>
+npm install<br/>
+npm start<br/>
