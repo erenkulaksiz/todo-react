@@ -1,6 +1,8 @@
-Basic todo list app made with React & redux.
-Same as todo-app i made earlier, but i stopped using next.js and implemented redux.
-I didnt made project with API this time, because of the mockapi.io's limitations.
+# todo-react
+
+Basic todo list app made with React & redux.<br/>
+Same as todo-app i made earlier, but i stopped using next.js and implemented redux.<br/>
+I didnt made project with API this time, because of the mockapi.io's limitations.<br/>
 
 # Run the project
 git clone https://github.com/erenkulaksiz/todo-react.git<br/>
