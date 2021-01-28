@@ -50,15 +50,18 @@ class TodoApp extends Component {
 
         const todoTasks = [], laterTasks = [], doneTasks = [];
 
-        console.log(store.getState());
+        const storeTasks = store.getState().tasks;
+        const storeEdit = store.getState().edit;
 
-        store.getState().tasks.map(function (task, index) {
+        console.log(storeTasks);
+
+        storeTasks.map(function (task, index) {
 
             const cardTemplate = <Card
                 key={index}
                 taskName={task.taskName}
                 taskDesc={task.taskDesc}
-                isEditing={store.getState().edit.id == index && store.getState().edit.editing}
+                isEditing={storeEdit.id == index && storeEdit.editing}
                 onEditClick={() => { editMode(index) }}
                 onCancel={() => { cancelEdit() }}
                 onSubmit={(data) => { submitEdit(data, index) }}
